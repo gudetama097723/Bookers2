@@ -1,0 +1,8 @@
+<h2>Book detail</h2>
+
+<% @books.each do |book| %>
+  <div>
+    <p>タイトル：<%= book.title %></p>
+    <p>本文：<%= book.body %></p>
+  </div>
+<% end %>
