@@ -62,7 +62,16 @@
   <%= flash[:notice] %>
   </div>
 
-
+  <% if @error_messages.present? %>
+    <div class="error-box">
+      <p><%= @error_messages.count %> errors prohibited this from being saved:</p>
+      <ul>
+        <% @error_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
     <%= yield %>
   <footer>

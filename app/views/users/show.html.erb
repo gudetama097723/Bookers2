@@ -1,49 +1,14 @@
 
-<%if @book.errors.any? %>
-  <%= @book.errors.count %>error prohibited this book from being saved:
-  <ul>
-    <% @book.errors.full_messages.each do |message|%>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render "users/user_info", user: @user %>
 
-<h2>User info</h2>
-
-  <% if @user.image.attached? %>
-    <%= image_tag @user.image, size: "100x100" %>
-  <% else %>
-    <%= image_tag 'noimage.jpg', size: "100x100" %>
-  <% end %>
-
-  <p>name</p>
-    <div><%= @user.name %></div>
-
-  <p>introduction</p>
-    <div><%= @user.introduction %></div>
-
-  <% if @user == Current.user %>
-    <%= link_to "編集", edit_user_path(@user) %>
-  <% end %>
-
-  <h2>New book</h2>
-  <%= form_with model: @book do |f|%>
-
-  <p>Title</p>
-    <%= f.text_field :title %>
-
-  <p>Opinion</p>
-    <%= f.text_field :body %><br>
-    <%= f.submit "Create Book" %>
-
-  <% end %>
+<%= render "books/form", book: @book %>
 
 
 <h2>Books</h2>
 <% @books.each do |book| %>
 
-  <% if @user.image.attached? %>
-    <%= image_tag @user.image, size: "100x100" %>
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image, size: "100x100" %>
   <% else %>
     <%= image_tag 'noimage.jpg', size: "100x100" %>
   <% end %>

@@ -1,0 +1,17 @@
+<h2>User info</h2>
+
+  <% if user.profile_image.attached? %>
+    <%= image_tag user.profile_image, size: "100x100" %>
+  <% else %>
+    <%= image_tag 'noimage.jpg', size: "100x100" %>
+  <% end %>
+
+  <p>name</p>
+    <div><%= user.name %></div>
+
+  <p>introduction</p>
+    <div><%= user.introduction %></div>
+
+  <% if user == Current.user %>
+    <%= link_to "編集", edit_user_path(user) %>
+  <% end %>

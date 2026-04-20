@@ -1,10 +1,12 @@
+<%= render "users/user_info", user: Current.user %>
+<%= render "books/form", book: Book.new %>
 <h2>Books</h2>
 <h4>Title</h4>
 <h4>Opinion</h4>
 <% @books.each do |book| %>
   <div>
-    <% if book.user.image.attached? %>
-      <%= image_tag book.user.image, size: "100x100" %>
+    <% if book.user.profile_image.attached? %>
+      <%= image_tag book.user.profile_image, size: "100x100" %>
     <% else %>
       <%= image_tag "noimage.jpg", size: "100x100" %>
     <% end %>

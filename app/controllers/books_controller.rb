@@ -1,4 +1,7 @@
 class BooksController < ApplicationController
+
+  before_action :is_matching_login_user, only: [:edit, :update]
+
   def new
   end
 
@@ -11,6 +14,7 @@ class BooksController < ApplicationController
     else
       @user = Current.user
       @books = @user.books
+      @error_messages = @book.errors.full_messages
       render "users/show", status: :unprocessable_entity
     end
   end
@@ -21,6 +25,7 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    @user = @book.user
   end
 
   def edit
@@ -47,4 +52,12 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title,:body)
   end
+
+  def is_matching_login_user
+    @book = Book.find(params[:id])
+    unless @book.user.id == Current.user.id
+      redirect_to root_path
+    end
+  end
+
 end
