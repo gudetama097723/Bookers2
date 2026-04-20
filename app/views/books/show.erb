@@ -1,8 +1,16 @@
 <h2>Book detail</h2>
 
-<% @books.each do |book| %>
-  <div>
-    <p>タイトル：<%= book.title %></p>
-    <p>本文：<%= book.body %></p>
-  </div>
-<% end %>
+  <% if @book.user.image.attached? %>
+    <%= image_tag @book.user.image, size: "100x100" %>
+  <% else %>
+    <%= image_tag 'noimage.jpg', size: "100x100" %>
+  <% end %>
+  <%= link_to @book.user.name, user_path(@book.user) %>
+  <p><%= @book.title %></p>
+  <p><%= @book.body %></p>
+  <% if @book.user == Current.user %>
+  <%= link_to "Edit", edit_book_path(@book) %>
+  <%= link_to "destroy", book_path(@book), data: { turbo_method: :delete } %>
+  <% end %>
+
+  

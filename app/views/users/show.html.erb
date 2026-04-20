@@ -8,30 +8,47 @@
 <% end %>
 
 <h2>User info</h2>
+
   <% if @user.image.attached? %>
     <%= image_tag @user.image, size: "100x100" %>
   <% else %>
     <%= image_tag 'noimage.jpg', size: "100x100" %>
   <% end %>
-<p>name</p>
-  <div><%= @user.name %></div>
-<p>introduction</p>
-  <div><%= @user.introduction %></div>
 
-<%= link_to "編集", edit_user_path %>
+  <p>name</p>
+    <div><%= @user.name %></div>
 
-<h2>New book</h2>
-<%= form_with model: @book do |f|%>
+  <p>introduction</p>
+    <div><%= @user.introduction %></div>
+
+  <% if @user == Current.user %>
+    <%= link_to "編集", edit_user_path(@user) %>
+  <% end %>
+
+  <h2>New book</h2>
+  <%= form_with model: @book do |f|%>
+
   <p>Title</p>
     <%= f.text_field :title %>
+
   <p>Opinion</p>
     <%= f.text_field :body %><br>
     <%= f.submit "Create Book" %>
-<% end %>
+
+  <% end %>
 
 
 <h2>Books</h2>
 <% @books.each do |book| %>
-  <p><%= book.title %></p>
+
+  <% if @user.image.attached? %>
+    <%= image_tag @user.image, size: "100x100" %>
+  <% else %>
+    <%= image_tag 'noimage.jpg', size: "100x100" %>
+  <% end %>
+
+  <p><%= link_to book.title, book_path(book) %></p>
+
   <p><%= book.body %></p>
+
 <% end %>

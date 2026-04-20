@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: [:new, :create]
 
+
   def new
     @user = User.new
   end
@@ -38,6 +39,16 @@ class UsersController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
   end
+
+  def get_image(width, height)
+    if image.attached?
+      image
+    else
+      "noimage.jpg"
+    end
+  end
+
+
 
   private
 

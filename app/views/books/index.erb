@@ -1,8 +1,14 @@
 <h2>Books</h2>
-
+<h4>Title</h4>
+<h4>Opinion</h4>
 <% @books.each do |book| %>
   <div>
-    <p>タイトル：<%= book.title %></p>
-    <p>本文：<%= book.body %></p>
+    <% if book.user.image.attached? %>
+      <%= image_tag book.user.image, size: "100x100" %>
+    <% else %>
+      <%= image_tag "noimage.jpg", size: "100x100" %>
+    <% end %>
+    <p><%= link_to book.title, book_path(book) %></p>
+    <p><%= book.body %></p>
   </div>
 <% end %>

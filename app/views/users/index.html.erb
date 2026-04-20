@@ -4,6 +4,11 @@
 
 <% @users.each do |user| %>
   <div>
-    <%= user.name %>
+  <% if user.image.attached? %>
+    <%= image_tag user.image, size: "100x100" %>
+  <% else %>
+    <%= image_tag 'noimage.jpg', size: "100x100" %>
+  <% end %>
+    <%= link_to user.name, user_path(user) %>
   </div>
 <% end %>
