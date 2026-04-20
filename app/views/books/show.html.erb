@@ -10,7 +10,7 @@
   <p><%= @book.body %></p>
   <% if @book.user == Current.user %>
   <%= link_to "Edit", edit_book_path(@book) %>
-  <%= button_to "destroy", book_path(@book), method: :delete %>
+  <%= link_to "destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に消しますか？" } %>
   <% end %>
 
   

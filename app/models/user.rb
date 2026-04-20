@@ -9,7 +9,6 @@ class User < ApplicationRecord
   validates :email_address, presence: true
   has_secure_password
   validates :password, length: { minimum: 6}, allow_blank: true
-  validates :name, presence: true
-  validates :name, length: { minimum: 2 }, allow_blank: true
-
+  validates :name,uniqueness: true,length: { minimum: 2, maximum: 20 }
+  validates :introduction,length: { maximum: 50 }
 end
