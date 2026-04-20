@@ -7,11 +7,11 @@ class BooksController < ApplicationController
     @book.user_id = Current.user.id
 
     if @book.save
-      redirect_to user_path(Current.user)
+      redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @user = Current.user
       @books = @user.books
-      render "users/show" 
+      render "users/show", status: :unprocessable_entity
     end
   end
 
@@ -32,6 +32,7 @@ class BooksController < ApplicationController
     book.destroy
     redirect_to books_path
   end
+
   private
 
   def book_params
