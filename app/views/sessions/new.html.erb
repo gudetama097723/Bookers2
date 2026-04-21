@@ -1,6 +1,10 @@
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0">
+
 <h2>Log in</h2>
 
 <%= form_with url: session_path do |form| %>
@@ -10,15 +14,19 @@
   </div>
   <div>
   <%= form.label :password %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72 %><br>
+  <%= form.password_field :password, required: true, autocomplete: "current-password" %><br>
   </div>
   <div>
   <%= form.check_box :remember_me %>
-  <%= form.label :remember_me, "remember me" %>
+  <%= form.label :remember_me, "Remember me" %>
   </div>
-  <%= form.submit "Log in" %>
+  <%= form.submit "Log in", class: "btn btn-sm btn-primary" %>
 <% end %>
 <%= link_to "Sign in", new_user_path %>
 <br>
 
 <%= link_to "Forgot password?", new_password_path %>
+
+    </div>
+  </div>
+</div>
