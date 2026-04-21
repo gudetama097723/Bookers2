@@ -13,9 +13,9 @@ class BooksController < ApplicationController
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @user = Current.user
-      @books = @user.books
+      @books = Book.all
       @error_messages = @book.errors.full_messages
-      render "users/show", status: :unprocessable_entity
+      render "books/index", status: :unprocessable_entity
     end
   end
 
@@ -56,7 +56,7 @@ class BooksController < ApplicationController
   def is_matching_login_user
     @book = Book.find(params[:id])
     unless @book.user.id == Current.user.id
-      redirect_to root_path
+      redirect_to books_path
     end
   end
 
