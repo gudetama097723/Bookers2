@@ -1,3 +1,7 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="text-star">
+
 <h1>User info</h1>
 <%= form_with model: @user do |f| %>
   <% if @user.errors.any? %>
@@ -30,3 +34,7 @@
     <%= f.submit "Update User" %>
   </div>
   <% end %>
+  
+    </div>
+  </div>
+</div>

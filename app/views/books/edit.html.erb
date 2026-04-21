@@ -1,4 +1,10 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="text-star">
+
+
 <h1>Editing Book</h1>
+
 <%= form_with model: @book do |f| %>
 
   <% if @book.errors.any? %>
@@ -16,9 +22,14 @@
   <%= f.text_field :title %>
 
   <h4>Opinion</h4>
-    <%= f.text_field :body %>
-
+    <%= f.text_field :body %><br>
     <%= f.submit "Update Book" %>
 <% end %>
 <%= link_to "Show", book_path(@book.id) %>
 <%= link_to "Back", books_path %>
+
+
+    </div>
+
+  </div>
+</div>

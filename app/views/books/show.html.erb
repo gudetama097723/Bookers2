@@ -1,17 +1,36 @@
-<%= render "users/user_info", user: @book.user %>
-<h2>Book detail</h2>
+<div class="container px-5 px-sm-0">
+	<div class="row">
 
+  <div class="col-md-3">
+    <%= render "users/user_info", user: @book.user %>
+    <%= render "books/form", book: Book.new %>
+  </div>
+
+<div class="col-md-8 offset-md-1">
+<h2>Book detail</h2>
+<div class="d-flex align-items-start gap-4">
+  <div class="text-center">
   <% if @book.user.profile_image.attached? %>
     <%= image_tag @book.user.profile_image, size: "100x100" %>
   <% else %>
     <%= image_tag 'noimage.jpg', size: "100x100" %>
-  <% end %>
+  <% end %><br>
+  <div>
   <%= link_to @book.user.name, user_path(@book.user) %>
-  <p><%= @book.title %></p>
-  <p><%= @book.body %></p>
-  <% if @book.user == Current.user %>
-  <%= link_to "Edit", edit_book_path(@book) %>
-  <%= link_to "destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に消しますか？" } %>
-  <% end %>
+</div>
+</div>
 
-  
+<div class="d-flex align-items-center gap-3">
+  <div><%= @book.title %></div>
+  <div><%= @book.body %></div>
+
+  <div class="d-flex gap-2">
+  <% if @book.user == Current.user %>
+    <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %>
+    <%= link_to "destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に消しますか？" }, class: "btn btn-danger btn-sm" %>
+  <% end %>
+</div>
+</div>
+
+  </div>
+</div>
