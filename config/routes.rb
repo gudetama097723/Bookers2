@@ -2,7 +2,14 @@ Rails.application.routes.draw do
   root to: "homes#top"
   get "home/about", to: "homes#about",as: "about"
 
-  resources :users, only: [:new, :create, :show, :index, :edit, :update], path_names: { new: "sign_up"} 
+  resources :users, only: [:new, :create, :show, :index, :edit, :update], path_names: { new: "sign_up"} do
+    resource :relationships, only: [:create, :destroy]
+    member do
+      get :followings
+      get :followers
+    end
+  end
+
   resource :session
   resources :passwords, param: :token
   resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
