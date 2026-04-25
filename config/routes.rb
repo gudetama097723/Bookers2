@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-  resource :favorite, only: [:create, :destroy]
+    resources :book_comments, only: [:create, :destroy]
+    resource :favorite, only: [:create, :destroy]
   end
 
 
