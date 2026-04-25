@@ -16,7 +16,8 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
   end
-
+  
+  get "search" => "searches#search"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

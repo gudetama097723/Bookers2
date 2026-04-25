@@ -1,0 +1,53 @@
+<% if params[:model] == "user" %>
+
+<h2>User search results</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>image</th>
+      <th>name</th>
+      <th>follows</th>
+      <th>followers</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @users.any? %>
+      <%= render @users %>
+    <% else %>
+      <tr>
+        <td colspan="5">ユーザーが見つかりません</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>
+
+<% if params[:model] == "book" %>
+
+<h2>Book search results</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Opinion</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @books.any? %>
+      <%= render @books %>
+    <% else %>
+      <tr>
+        <td colspan="3">投稿が見つかりません</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>
