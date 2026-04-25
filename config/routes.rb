@@ -5,10 +5,9 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show, :index, :edit, :update], path_names: { new: "sign_up"} 
   resource :session
   resources :passwords, param: :token
-
-  resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy]
-
-
+  resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+  resource :favorite, only: [:create, :destroy]
+  end
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
