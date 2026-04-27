@@ -1,0 +1,5 @@
+    <% if book.favorited_by?(Current.user) %>
+        <%= button_to "いいね解除", book_favorite_path(book), method: :delete %>
+    <% else %>
+        <%= button_to "いいね", book_favorite_path(book), method: :post %>
+    <% end %>
