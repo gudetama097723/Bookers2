@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
     resources :book_comments, only: [:create, :destroy]
-    resource :favorite, only: [:create, :destroy]
+    resource :favorites, only: [:create, :destroy]
   end
   
   get "search" => "searches#search"

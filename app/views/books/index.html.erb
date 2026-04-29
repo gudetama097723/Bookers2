@@ -34,7 +34,7 @@
   <td><%= link_to book.title, book_path(book) %></td>
   <td><%= book.body %></td>
   <td>
-    <%= turbo_frame_tag dom_id(book, :favorite) do %>
+    <%= turbo_frame_tag dom_id(book, :favorites) do %>
       <%= render "favorites/favorite_btn", book: book %>
     <% end %>
   </td>

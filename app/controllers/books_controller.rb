@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-
+  before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :is_matching_login_user, only: [:edit, :update]
 
   def new
@@ -52,6 +52,10 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title,:body)
+  end
+
+  def set_book
+    @book = Book.find(params[:id])
   end
 
   def is_matching_login_user
