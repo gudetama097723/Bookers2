@@ -1,0 +1,4 @@
+<%= form_with moder: [@room, Message.new] do |f| %>
+  <%= f.text_field :content %>
+  <%= f.submit "送信" %>
+<% end %>

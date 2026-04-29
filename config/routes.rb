@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :rooms, only: [:create, :show] do
+    resources :messages, only: [:create]
+  end
+
   resource :session
   resources :passwords, param: :token
   resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy] do

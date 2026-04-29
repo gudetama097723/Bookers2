@@ -32,20 +32,15 @@
   </div>
 
   <div class= "d-flex gap-2">
-
-      <%= render "favorites/favorite_btn", book: @book %>
-
-
-
+    <%= render "favorites/favorite_btn", book: @book %>
     <div class= "d-flex gap-2">コメント数：<%= @book.book_comments.count %></div>
-
+    <div>閲覧数： <%= @book.view_count %></div>
   </div>
 </div>
 
   </div>
 
-<%= render "book_comments/comments", book: @book %>
-
+  <%= render "book_comments/comments", book: @book %>
 
   <div id="comment_form">
     <%= form_with model: [@book, @book_comment] do |f| %>
