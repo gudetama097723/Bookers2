@@ -20,7 +20,10 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
+    @books = Book
+      .left_joins(:favorites)
+      .group(:id)
+      .order(Arel.sql("COUNT(CASE WHEN favorites.created_at >= '#{1.week.ago}' THEN 1 END) DESC"))
   end
 
   def show
