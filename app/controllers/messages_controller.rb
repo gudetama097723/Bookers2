@@ -1,14 +1,16 @@
 class MessagesController < ApplicationController
 
   def create
-  @room = Room.finde(params[:room_id])
+  @room = Room.find(params[:room_id])
   @message = @room.messages.build(message_params)
-  @message.user = current_user
+  @message.user = Current.user
 
-  if @message.sabe
-    redirect_to room_path(@room)
+  if @message.save
+    redirect_to room_path(@room), status: :see_other
   else
-    render "rooms/show"
+    @messages = @room.messages
+    render "rooms/show", status: :unprocessable_entity
+  end
   end
 
   private

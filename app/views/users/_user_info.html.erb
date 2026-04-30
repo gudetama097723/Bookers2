@@ -39,12 +39,9 @@
       <% end %>
     <% end %>
 
-    <% if Current.user != user && 
-          Current.user.following?(user) && 
-          user.following?(Current.user)%>
-
-      <%= button_to "チャットを始める", rooms_path(user_id: user.id), class: "btn btn-success" %>
-    <% end%>
+    <% if Current.user != user && Current.user.following?(user) && user.following?(Current.user)%>
+      <%= button_to "チャットを始める", rooms_path(user_id: user.id), method: :post, class: "btn btn-success" %>
+    <% end %>
 
   <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-sm w-100" do %>
   <i class="fa-solid fa-user-gear"></i>
