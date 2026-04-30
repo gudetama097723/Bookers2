@@ -38,7 +38,54 @@
   </tr>
   <% end %>
   </tbody>
-  </table>
+
+</table>
+
+  <div>
+    <h2>投稿数の前日比・前週比</h2>
+  </div>
+
+<table class="table table-bordered text-center">
+
+  <thead class="table-light">
+  <tr>
+    <th>今日の投稿数</th>
+    <th>昨日の投稿数</th>
+    <th>前日比</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td><%= @today_count %></td>
+    <td><%= @yesterday_count %></td>
+    <td><%= @day_ratio.present? ? "#{@day_ratio}" : "-" %>%</td>
+  </tr>
+  </tbody>
+
+</table>
+
+
+<table class="table table-bordered text-center">
+
+
+  <thead class="table-light">
+  <tr>
+    <th>今週の投稿数</th>
+    <th>先週の投稿数</th>
+    <th>前週比</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td><%= @this_week_count %></td>
+    <td><%= @last_week_count %></td>
+    <td><%= @week_ratio.present? ? "#{@week_ratio}%" : "—" %>%</td>
+  </tr>
+  </tbody>
+</table>
+
 </div>
 
 </div>

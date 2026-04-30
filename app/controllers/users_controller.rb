@@ -25,7 +25,25 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @book = Book.new
     @books = @user.books
-    
+
+    @today_count = @books.where(created_at: Time.zone.today.all_day).count
+    @yesterday_count = @books.where(created_at: 1.day.ago.all_day).count
+    @day_ratio = 
+      if @yesterday_count == 0
+        nil
+      else
+        (@today_count.to_f / @yesterday_count * 100).round(1)
+      end
+
+    @this_week_count = @books.where(created_at: Time.zone.now.all_week).count
+    @last_week_count = @books.where(created_at: 1.week.ago.all_week).count
+    @week_ratio = 
+      if @last_week_count == 0
+        nil
+      else
+        (@this_week_count.to_f / @last_week_count * 100).round(1)
+      end
+
   end
 
   def edit
