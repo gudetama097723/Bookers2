@@ -86,6 +86,47 @@
   </tbody>
 </table>
 
+<h2>7日間分の投稿数</h2>
+
+<table class="table table-bordered text-center">
+  <thead>
+    <tr>
+      <% @past_7_days.each do |day| %>
+        <th><%= day.strftime("%m/%d") %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% @posts_per_day.each do |count| %>
+        <td><%= count %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<canvas id="postsChart"></canvas>
+<script>
+  const ctx = document.getElementById("postsChart");
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: <%= raw @past_7_days.map { |d| d.strftime("%m/%d")}.to_json %>,
+      datasets: [{
+        label: "投稿数",
+        data: <%= @posts_per_day.to_json %>,
+        borderWidth: 2,
+        tension: 0.3}]},
+    options: {
+      responsive: true,
+      scales: {y: {beginAtZero: true,ticks: {stepSize: 1}}}
+    }
+  });
+
+</script>
+
+
 </div>
 
 </div>

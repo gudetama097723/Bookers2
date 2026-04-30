@@ -44,6 +44,11 @@ class UsersController < ApplicationController
         (@this_week_count.to_f / @last_week_count * 100).round(1)
       end
 
+    @past_7_days = (0..6).map { |i| Date.current - i }.reverse
+
+    @posts_per_day = @past_7_days.map do |day|
+      @user.books.where(created_at: day.all_day).count
+    end
   end
 
   def edit
