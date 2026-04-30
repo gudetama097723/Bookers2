@@ -107,24 +107,40 @@
 
 <canvas id="postsChart"></canvas>
 <script>
-  const ctx = document.getElementById("postsChart");
+  document.addEventListener("turbo:load", () => {
+    const ctx = document.getElementById("postsChart");
+    if (!ctx) return;
 
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: <%= raw @past_7_days.map { |d| d.strftime("%m/%d")}.to_json %>,
-      datasets: [{
-        label: "投稿数",
-        data: <%= @posts_per_day.to_json %>,
-        borderWidth: 2,
-        tension: 0.3}]},
-    options: {
-      responsive: true,
-      scales: {y: {beginAtZero: true,ticks: {stepSize: 1}}}
-    }
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: <%= raw @past_7_days.map { |d| d.strftime("%m/%d")}.to_json %>,
+        datasets: [{
+          label: "投稿数",
+          data: <%= @posts_per_day.to_json %>,
+          borderWidth: 2,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
   });
-
 </script>
+
+<%= form_with url: daily_posts_user_path(@user), method: :get, data: { turbo_frame: "daily_posts" } do |f| %>
+  <%= f.date_field :date, value: Date.current %>
+  <%= f.submit "検索", class: "btn btn-primary btn-sm" %>
+<% end %>
+
+<turbo-frame id="daily_posts"></turbo-frame>
 
 
 </div>

@@ -82,6 +82,13 @@ class UsersController < ApplicationController
     @users = @user.followers
   end
 
+  def daily_posts
+    @user = User.find(params[:id])
+    date = Date.parse(params[:date])
+    @count = @user.books.where(created_at: date.all_day).count
+    render partial: "users/daily_posts"
+  end
+
   private
 
   def user_params
