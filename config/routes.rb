@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   
+  resources :groups
+
   get "search" => "searches#search"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

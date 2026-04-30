@@ -4,6 +4,10 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :book_comments,dependent: :destroy
 
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
+  has_many :owned_groups, class_name: "Group", foreign_key: "owner_id"
+  
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   has_many :books, dependent: :destroy
@@ -20,7 +24,7 @@ class User < ApplicationRecord
   else
     "noimage.jpg"
   end
-end
+  end
 
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followings, through: :relationships,source: :followed

@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div class="text-center">
+
+<h1>Create Group</h1>
+
+<%= form_with model: @group do |f| %>
+  <div>グループ名</div>
+  <%= f.text_field :name %>
+  <div>紹介文</div>
+  <%= f.text_area :introduction %>
+  <div>グループ画像</div>
+  <%= f.file_field :image %><br>
+  <%= f.submit "作成" %>
+<% end %>
+
+  </div>
+</div>

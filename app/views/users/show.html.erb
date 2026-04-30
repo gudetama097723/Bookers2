@@ -105,34 +105,40 @@
   </tbody>
 </table>
 
-<canvas id="postsChart"></canvas>
+<canvas id="postsChart" data-turbo-cache="false"></canvas>
 <script>
-  document.addEventListener("turbo:load", () => {
-    const ctx = document.getElementById("postsChart");
-    if (!ctx) return;
+document.addEventListener("turbo:load", function () {
+  const canvas = document.getElementById("postsChart");
+  if (!canvas) return;
 
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: <%= raw @past_7_days.map { |d| d.strftime("%m/%d")}.to_json %>,
-        datasets: [{
-          label: "投稿数",
-          data: <%= @posts_per_day.to_json %>,
-          borderWidth: 2,
-          tension: 0.3
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { stepSize: 1 }
-          }
+  if (window.postsChart && typeof window.postsChart.destroy === "function") {
+    window.postsChart.destroy();
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  window.postsChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: <%= raw @past_7_days.map { |d| d.strftime("%m/%d") }.to_json %>,
+      datasets: [{
+        label: "投稿数",
+        data: <%= @posts_per_day.to_json %>,
+        borderWidth: 2,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
         }
       }
-    });
+    }
   });
+});
 </script>
 
 <%= form_with url: daily_posts_user_path(@user), method: :get, data: { turbo_frame: "daily_posts" } do |f| %>
