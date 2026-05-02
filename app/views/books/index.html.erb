@@ -38,6 +38,7 @@
   </td>
   <td><p>コメント数：<%= book.book_comments.count %></p></td>
   <td>閲覧数： <%= book.view_count %></td>
+  <td><div class="raty-readonly" data-score="<%= book.rating %>"></div></td>
   </tr>
   <% end %>
   </tbody>
