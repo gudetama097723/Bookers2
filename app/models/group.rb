@@ -7,4 +7,9 @@ class Group < ApplicationRecord
   has_one_attached :image
   
   validates :name, presence: true
+
+  def joined_by?(user)
+    group_users.exists?(user_id: user.id)
+  end
+
 end

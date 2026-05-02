@@ -22,7 +22,9 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   
-  resources :groups
+  resources :groups do
+    resource :group_users, only: [:create, :destroy]
+  end
 
   get "search" => "searches#search"
 

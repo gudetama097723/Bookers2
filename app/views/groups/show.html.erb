@@ -10,23 +10,51 @@
 
 <h1>Group Detall</h1>
 <table class="table table-hover table-inverse">
+
+  <thead>
+  <tr>
+    <th>Image</th>
+    <th>グループ名</th>
+    <th>紹介文</th>
+    <th>メンバー</th>
+    <th></th>
+  </tr>
+  </thead>
+
+<tbody>
 <tr>
   <th>
     <% if @group.image.attached? %>
       <%= image_tag @group.image, size: "100x100" %>
     <% else %>
-      <%= image_tag "no_image.jpg", size: "100x100" %>
+      <%= image_tag "noimage.jpg", size: "100x100" %>
     <% end %>
   </th>
   <th><%= @group.name %></th>
   <th><%= @group.introduction %></th>
-  <th>オーナー: <%= @group.owner.name %></th>
+  <th>
+  <div>
+    <% @group.users.each do |user| %>
+      <div><%= user.name %></div>
+    <% end %>
+  </div>
+  </th>
+  <th>
+  <% if @group.owner != Current.user %>
+    <% if @group.joined_by?(Current.user) %>
+      <%= link_to "Leave this group",group_group_users_path(@group), data: { turbo_method: :delete }, class: "btn btn-danger"%>
+    <% else %>
+      <%= link_to "Join this group", group_group_users_path(@group), data: { turbo_method: :post }, class: "btn btn-primary"%>
+    <% end %>
+  <% end %>
+  </th>
   <th>
     <% if @group.owner == Current.user %>
       <%= link_to "Edit", edit_group_path(@group) %>
     <% end %>
   </th>
 </tr>
+</tbody>
 </table>
 
 </div>
