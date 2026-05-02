@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update]
-  before_action :ensure_owner!, only: [:edit, :update]
+  before_action :set_group, only: [:show, :edit, :update, :notice, :send_notice]
+  before_action :ensure_owner!, only: [:edit, :update, :notice, :send_notice]
 
   def index
     @groups = Group.all
@@ -37,6 +37,21 @@ class GroupsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def notice
+    @group = Group.find(params[:id])
+  end
+
+  def send_notice
+    @group = Group.find(params[:id])
+    @group.users.each do |user|
+      GroupMailer.notice_email(user, @group, params[:title], params[:body]).deliver_now
+    end
+    @title = params[:title]
+    @body = params[:body]
+
+    render :send_notice
   end
 
   private

@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div class="text-center">
+
+<h2>Event Mail</h2>
+
+<%= form_with url: send_notice_group_path(@group), method: :post, data: { turbo: false } do %>
+  <div>
+    <%= label_tag :title, "Title" %><br>
+    <%= text_field_tag :title %>
+  </div>
+
+  <div>
+    <%= label_tag :body, "Content" %><br>
+    <%= text_area_tag :body %>
+  </div>
+
+  <%= submit_tag "送信" %>
+<% end %>
+  </div>
+</div>
