@@ -4,11 +4,11 @@
   <%= form_with model: book do |f|%>
 
   <p>Title</p>
-    <%= f.text_field :title %>
-
+    <%= f.text_field :title, class: "form-control mb-2" %>
   <p>Opinion</p>
-    <%= f.text_field :body %><br>
+    <%= f.text_area :body, class: "form-control mb-2" %><br>
     <div id="post_raty"></div>
+    <%= f.text_field :tag_names, placeholder: "タグをカンマ区切りで入力", class: "form-control mb-2" %><br>
     <%= f.submit "Create Book", class: "btn btn-sm btn-success" %>
 
   <% end %>

@@ -10,6 +10,13 @@ class BooksController < ApplicationController
     @book.user_id = Current.user.id
 
     if @book.save
+      tags = params[:book][:tag_names].to_s.split(",")
+
+      tags.each do |tag_name|
+        tag = Tag.find_or_create_by(name: tag_name.strip)
+        @book.tags << tag
+      end
+
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @user = Current.user
@@ -30,6 +37,9 @@ class BooksController < ApplicationController
       .left_joins(:favorites)
       .group(:id)
       .order(Arel.sql("COUNT(CASE WHEN favorites.created_at >= '#{1.week.ago}' THEN 1 END) DESC"))
+      if params[:tag].present?
+        @books =Book.joins(:tags).where(tags: { name: params[:tag]})
+      end
   end
 
   def show
@@ -46,6 +56,14 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
       if @book.update(book_params)
+      @book.tags.clear
+      tags = params[:book][:tag_names].to_s.split(",")
+
+      tags.each do |tag_name|
+        tag = Tag.find_or_create_by(name: tag_name.strip)
+        @book.tags << tag
+      end
+      
         redirect_to book_path(@book), notice: "You have updated book successfully."
       else
         render :edit, status: :unprocessable_entity

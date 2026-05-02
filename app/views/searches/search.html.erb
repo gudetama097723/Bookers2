@@ -1,4 +1,4 @@
-<% if params[:model] == "user" %>
+<% if @users.present? %>
 
 <h2>User search results</h2>
 
@@ -26,28 +26,29 @@
 
 <% end %>
 
-<% if params[:model] == "book" %>
+<% if @books.present? %>
 
 <h2>Book search results</h2>
 
+  <% if params[:tag].present? %>
+    <h3>タグ検索: <%= params[:tag] %></h3>
+  <% end %>
 <table class="table">
   <thead>
     <tr>
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
+      <th>Tag</th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% if @books.any? %>
-      <%= render @books %>
-    <% else %>
-      <tr>
-        <td colspan="3">投稿が見つかりません</td>
-      </tr>
-    <% end %>
+    <%= render @books %>
   </tbody>
 </table>
 
 <% end %>
+
+

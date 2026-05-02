@@ -1,9 +1,18 @@
 class SearchesController < ApplicationController
   def search
+    @books = []
+    @users = []
+
+    if params[:tag].present?
+      @books = Book.joins(:tags).where(tags: { name: params[:tag] })
+      return
+    end
+
+    return unless params[:keyword].present?
+
     keyword = params[:keyword]
     method = params[:method]
     model = params[:model]
-
 
     if model == "user"
       @users = search_users(keyword,method)
@@ -44,5 +53,9 @@ class SearchesController < ApplicationController
     else
       Book.where("title LIKE ?", "%#{keyword}%")
     end
+  end
+
+  def search_books_by_tag(tag_name)
+    Book.joins(:tags).where(tags: { name: tag_name })
   end
 end

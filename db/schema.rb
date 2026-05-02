@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_02_024952) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_02_114908) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -47,6 +47,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_02_024952) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "book_tags", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_tags_on_book_id"
+    t.index ["tag_id"], name: "index_book_tags_on_tag_id"
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "body"
@@ -54,6 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_02_024952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "view_count"
+    t.integer "rating"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -117,6 +127,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_02_024952) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -130,6 +146,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_02_024952) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "book_tags", "books"
+  add_foreign_key "book_tags", "tags"
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
   add_foreign_key "groups", "users", column: "owner_id"

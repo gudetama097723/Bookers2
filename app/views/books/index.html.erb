@@ -1,12 +1,12 @@
 <div class="container px-5 px-sm-0">
 	<div class="row">
 
-  <div class="col-md-3">
+  <div class="col-md-2">
     <%= render "users/user_info", user: Current.user %>
     <%= render "books/form", book: Book.new %>
   </div>
 
-<div class="col-md-8 offset-md-1">
+<div class="col-md-10">
 <h2>Books</h2>
 <%= link_to "新着順", books_path(sort: "new") %> |
 <%= link_to "評価の高い順", books_path(sort: "rate") %>
@@ -17,7 +17,8 @@
     <th></th>
     <th>Title</th>
     <th>Opinion</th>
-    <th colspan="3"></th>
+    <th>Tag</th>
+    <th></th><th></th><th></th><th></th>
   </tr>
   </thead>
 
@@ -35,6 +36,11 @@
   </td>
   <td><%= link_to book.title, book_path(book) %></td>
   <td><%= book.body %></td>
+  <td>
+  <% book.tags.each do |tag| %>
+    <%= link_to tag.name, books_path(tag: tag.name) %>
+  <% end %>
+  </td>
   <td>
       <%= render "favorites/favorite_btn", book: book %>
   </td>
