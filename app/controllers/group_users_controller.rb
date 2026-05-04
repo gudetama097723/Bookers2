@@ -1,5 +1,4 @@
 class GroupUsersController < ApplicationController
-
   def create
     group = Group.find(params[:group_id])
     group.group_users.create(user: Current.user)

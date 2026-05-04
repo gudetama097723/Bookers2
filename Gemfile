@@ -49,6 +49,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -57,9 +60,11 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
-    gem 'rspec-rails'
-    gem "factory_bot_rails"
-    gem 'faker'
+  gem "capybara", ">= 2.15"
 end
-  gem 'net-smtp'
+
+  gem "net-smtp"
+
+  gem "slim-rails"
+
+  gem "erb2slim"

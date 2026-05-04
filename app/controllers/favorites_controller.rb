@@ -1,11 +1,11 @@
 class FavoritesController < ApplicationController
-  before_action :set_book, only: [:create, :destroy]
+  before_action :set_book, only: [ :create, :destroy ]
   def create
     @favorite = @book.favorites.create(user: Current.user)
     @book.reload
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to request.referrer}
+      format.html { redirect_to request.referrer }
     end
   end
 
@@ -15,7 +15,7 @@ class FavoritesController < ApplicationController
         @book.reload
     respond_to do |format|
       format.turbo_stream
-      format.html {redirect_to request.referrer}
+      format.html { redirect_to request.referrer }
     end
   end
 

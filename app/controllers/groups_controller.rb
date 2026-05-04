@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :notice, :send_notice]
-  before_action :ensure_owner!, only: [:edit, :update, :notice, :send_notice]
+  before_action :set_group, only: [ :show, :edit, :update, :notice, :send_notice ]
+  before_action :ensure_owner!, only: [ :edit, :update, :notice, :send_notice ]
 
   def index
     @groups = Group.all
@@ -69,5 +69,4 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :introduction, :image)
   end
-
 end

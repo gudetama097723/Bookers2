@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :set_book, only: [ :show, :edit, :update, :destroy ]
+  before_action :is_matching_login_user, only: [ :edit, :update ]
 
   def new
   end
@@ -38,7 +38,7 @@ class BooksController < ApplicationController
       .group(:id)
       .order(Arel.sql("COUNT(CASE WHEN favorites.created_at >= '#{1.week.ago}' THEN 1 END) DESC"))
       if params[:tag].present?
-        @books =Book.joins(:tags).where(tags: { name: params[:tag]})
+        @books =Book.joins(:tags).where(tags: { name: params[:tag] })
       end
   end
 
@@ -63,7 +63,7 @@ class BooksController < ApplicationController
         tag = Tag.find_or_create_by(name: tag_name.strip)
         @book.tags << tag
       end
-      
+
         redirect_to book_path(@book), notice: "You have updated book successfully."
       else
         render :edit, status: :unprocessable_entity
@@ -79,7 +79,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title,:body, :rating)
+    params.require(:book).permit(:title, :body, :rating)
   end
 
   def set_book
@@ -92,5 +92,4 @@ class BooksController < ApplicationController
       redirect_to books_path
     end
   end
-
 end

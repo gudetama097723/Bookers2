@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :is_matching_login_user, only: [:edit, :update]
-  allow_unauthenticated_access only: [:new, :create]
+  before_action :is_matching_login_user, only: [ :edit, :update ]
+  allow_unauthenticated_access only: [ :new, :create ]
 
 
   def new
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
     @today_count = @books.where(created_at: Time.zone.today.all_day).count
     @yesterday_count = @books.where(created_at: 1.day.ago.all_day).count
-    @day_ratio = 
+    @day_ratio =
       if @yesterday_count == 0
         nil
       else
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
     @this_week_count = @books.where(created_at: Time.zone.now.all_week).count
     @last_week_count = @books.where(created_at: 1.week.ago.all_week).count
-    @week_ratio = 
+    @week_ratio =
       if @last_week_count == 0
         nil
       else
@@ -100,7 +100,5 @@ class UsersController < ApplicationController
   unless user.id == Current.user.id
     redirect_to user_path(Current.user)
   end
-
   end
-
 end

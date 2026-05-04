@@ -1,0 +1,60 @@
+.user-info
+
+  h2.user-info__title User info
+
+  .user-info__profile
+    - if user.profile_image.attached?
+      = image_tag user.profile_image,
+        size: "100x100",
+        class: "user-info__image"
+    - else
+      = image_tag "noimage.jpg",
+        size: "100x100",
+        class: "user-info__image"
+
+  table.user-info__table
+    tr.user-info__row
+      th.user-info__label name
+      td.user-info__value = user.name
+
+    tr.user-info__row
+      th.user-info__label introduction
+      td.user-info__value = user.introduction
+
+    tr.user-info__row
+      th.user-info__label follows
+      td.user-info__value
+        = link_to user.followings.count,
+          followings_user_path(user),
+          class: "user-info__link"
+
+    tr.user-info__row
+      th.user-info__label followers
+      td.user-info__value
+        = link_to user.followers.count,
+          followers_user_path(user),
+          class: "user-info__link"
+
+  .user-info__actions
+
+    - if Current.user != user
+      - if Current.user.following?(user)
+        = link_to "フォロー解除",
+          user_relationships_path(user),
+          data: { turbo_method: :delete },
+          class: "btn btn-danger user-info__btn user-info__btn--unfollow"
+      - else
+        = link_to "フォロー",
+          user_relationships_path(user),
+          data: { turbo_method: :post },
+          class: "btn btn-primary user-info__btn user-info__btn--follow"
+
+    - if Current.user != user && Current.user.following?(user) && user.following?(Current.user)
+      = button_to "チャットを始める",
+        rooms_path(user_id: user.id),
+        method: :post,
+        class: "btn btn-success user-info__btn user-info__btn--chat"
+
+    = link_to edit_user_path(user),
+      class: "btn btn-outline-secondary btn-sm w-100 user-info__edit-btn" do
+        i.fa-solid.fa-user-gear.user-info__icon

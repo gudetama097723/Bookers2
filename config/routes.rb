@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root to: "homes#top"
-  get "home/about", to: "homes#about",as: "about"
+  get "home/about", to: "homes#about", as: "about"
 
-  resources :users, only: [:new, :create, :show, :index, :edit, :update], path_names: { new: "sign_up"} do
-    resource :relationships, only: [:create, :destroy]
+  resources :users, only: [ :new, :create, :show, :index, :edit, :update ], path_names: { new: "sign_up" } do
+    resource :relationships, only: [ :create, :destroy ]
     member do
       get :followings
       get :followers
@@ -11,19 +11,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rooms, only: [:create, :show] do
-    resources :messages, only: [:create]
+  resources :rooms, only: [ :create, :show ] do
+    resources :messages, only: [ :create ]
   end
 
   resource :session
   resources :passwords, param: :token
-  resources :books, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-    resources :book_comments, only: [:create, :destroy]
-    resource :favorites, only: [:create, :destroy]
+  resources :books, only: [ :new, :index, :show, :create, :edit, :update, :destroy ] do
+    resources :book_comments, only: [ :create, :destroy ]
+    resource :favorites, only: [ :create, :destroy ]
   end
-  
+
   resources :groups do
-    resource :group_users, only: [:create, :destroy]
+    resource :group_users, only: [ :create, :destroy ]
     member do
       get :notice
       post :send_notice

@@ -15,15 +15,15 @@ class SearchesController < ApplicationController
     model = params[:model]
 
     if model == "user"
-      @users = search_users(keyword,method)
+      @users = search_users(keyword, method)
     else
-      @books = search_books(keyword,method)
+      @books = search_books(keyword, method)
     end
   end
 
   private
 
-  def search_users(keyword,method)
+  def search_users(keyword, method)
     case method
     when "perfect"
       User.where(name: keyword)
