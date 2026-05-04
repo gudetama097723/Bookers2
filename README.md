@@ -1,24 +1,53 @@
-# README
+Bookers2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+このアプリでは自身が読んだ本を投稿し、様々な人と共有、コミュニケーションをとることができます。
 
-Things you may want to cover:
+＜機能一覧＞
 
-* Ruby version
+-ユーザー登録　/　ログイン
+-本の投稿（タイトル、感想）
+　-投稿数比較欄
+　-過去一週間投稿数グラフ
+　-日別投稿数検索
+　-閲覧数表示
+-星評価機能
+-いいね機能
+-コメント機能
+　-コメント数表示
+-タグ機能
+　-タグ付け
+　-タグ検索
+-検索機能
+　-タイトル検索
+　-ユーザー検索
+-並び替え
+　-新着順
+　-評価順
+-フォロー、フォロワー機能
+　-メッセージ機能
+-グループ機能
+　-メール送信機能
 
-* System dependencies
+＜使用技術＞
 
-* Configuration
+-Ruby
+-Ruby on Rails
+-Boostrap
 
-* Database creation
+＜使い方＞
+1.本を投稿する
+2.タグをつける（カンマ区切り）
+3.検索で探す
 
-* Database initialization
+＜工夫した点＞
+-BoostrapでUIを統一
+-タグ検索とキーワード検索の分岐実装
 
-* How to run the test suite
+＜苦労した点＞
+-いいね機能の非同期化
+-グラフ実装時のJavaScript関連
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+＜今後の改善点＞
+-部分テンプレート化によるさらにスマートなコード
+-UI改善
+-タグの複数検索
