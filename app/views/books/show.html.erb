@@ -1,58 +1,65 @@
-<div class="container px-5 px-sm-0">
-	<div class="row">
+<div class="container px-5 px-sm-0 book-show">
+	<div class="row book-show__row">
 
-  <div class="col-md-2">
+  <div class="col-md-2 book-show__sidebar">
     <%= render "users/user_info", user: @book.user %>
     <%= render "books/form", book: Book.new %>
   </div>
 
-<div class="col-md-10">
-<h2>Book detail</h2>
-<div class="d-flex align-items-start gap-4">
-  <div class="text-center">
-  <% if @book.user.profile_image.attached? %>
-    <%= image_tag @book.user.profile_image, size: "100x100" %>
-  <% else %>
-    <%= image_tag 'noimage.jpg', size: "100x100" %>
-  <% end %><br>
-  <div>
-  <%= link_to @book.user.name, user_path(@book.user) %>
-</div>
+<div class="col-md-10 book-show__main">
+<h2 class="book-show__title">Book detail</h2>
+
+<div class="d-flex align-items-start gap-4 book-show__content">
+
+  <div class="text-center book-show__user">
+    <% if @book.user.profile_image.attached? %>
+     <%= image_tag @book.user.profile_image, size: "100x100" %>
+    <% else %>
+     <%= image_tag 'noimage.jpg', size: "100x100" %>
+    <% end %>
+  <div class="book-show__user-name">
+    <%= link_to @book.user.name, user_path(@book.user) %>
+  </div>
 </div>
 
-<div class="d-flex align-items-center gap-3">
-  <div><%= @book.title %></div>
-  <div><%= @book.body %></div>
+<div class="book-show__book">
+  <div class="book-show__book-title">Title: <%= @book.title %></div>
+  <div class="book-show__book-body">Opinion: <%= @book.body %></div>
 
-  <div class= "d-flex gap-2">
-  <% @book.tags.each do |tag| %>
-    <%= link_to tag.name, books_path(tag: tag.name) %>
-  <% end %>
+  <div class= "d-flex gap-2 book-show__tags">Tags: 
+    <% @book.tags.each do |tag| %>
+      <%= link_to tag.name, books_path(tag: tag.name) %>
+    <% end %>
   </div>
 
-  <div class= "d-flex gap-2">
+  <div class= "d-flex gap-2 book-show__meta">
     <%= render "favorites/favorite_btn", book: @book %>
-    <div class= "d-flex gap-2">コメント数：<%= @book.book_comments.count %></div>
+    <div class= "book-show__comments-count">コメント数：<%= @book.book_comments.count %></div>
     <div class="raty-readonly" data-score="<%= @book.rating %>"></div>
-    <div>閲覧数： <%= @book.view_count %></div>
-  </div>
-
-  <div class="d-flex gap-2">
-  <% if @book.user == Current.user %>
-    <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %>
-    <%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に消しますか？" }, class: "btn btn-danger btn-sm" %>
-  <% end %>
+    <div class="book-show__views">閲覧数： <%= @book.view_count %></div>
+    <% if @book.user == Current.user %>
+      <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %>
+      <%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に消しますか？" }, class: "btn btn-danger btn-sm" %>
+    <% end %>
   </div>
 </div>
 
   </div>
 
-  <%= render "book_comments/comments", book: @book %>
+  <div class="book-show__comments">
+    <%= render "book_comments/comments", book: @book %>
+  </div>
 
-  <div id="comment_form">
-    <%= form_with model: [@book, @book_comment] do |f| %>
-      <%= f.text_area :comment %><br>
-      <%= f.submit "送信", class: "btn btn-primary btn-sm" %>
+  <h6>コメント投稿<h6>
+  <div id="comment_form" class="book-show__comment-form">
+    <%= form_with model: [@book, @book_comment], class: "book-show__form" do |f| %>
+      <div class="book-show__form-group">
+        <%= f.text_area :comment, class: "form-control book-show__textarea" %>
+      </div>
+
+      <div class="book-show__form-actions">
+        <%= f.submit "送信", class: "btn btn-primary btn-sm book-show__submit" %>
+      </div>
     <% end %>
   </div>
 

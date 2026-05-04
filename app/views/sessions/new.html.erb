@@ -1,31 +1,67 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<div class="container login">
+  <div class="row justify-content-center login__row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 login__inner">
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0">
+      <!-- フラッシュ -->
+      <% if flash[:alert] %>
+        <div class="login__flash login__flash--alert">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
 
-<h2>Log in</h2>
+      <% if flash[:notice] %>
+        <div class="login__flash login__flash--notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
 
-<%= form_with url: session_path do |form| %>
-  <div>
-  <%= form.label :name %><br>
-  <%= form.text_field :name, required: true, autofocus: true, autocomplete: "username", value: params[:name] %><br>
-  </div>
-  <div>
-  <%= form.label :password %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password" %><br>
-  </div>
-  <div>
-  <%= form.check_box :remember_me %>
-  <%= form.label :remember_me, "Remember me" %>
-  </div>
-  <%= form.submit "Log in", class: "btn btn-sm btn-primary" %>
-<% end %>
-<%= link_to "Sign in", new_user_path %>
-<br>
+      <h2 class="login__title">Log in</h2>
 
-<%= link_to "Forgot password?", new_password_path %>
+      <%= form_with url: session_path, class: "login__form" do |form| %>
+
+        <div class="login__group">
+          <%= form.label :name, class: "login__label" %>
+          <%= form.text_field :name,
+              required: true,
+              autofocus: true,
+              autocomplete: "username",
+              value: params[:name],
+              class: "form-control login__input" %>
+        </div>
+
+        <div class="login__group">
+          <%= form.label :password, class: "login__label" %>
+          <%= form.password_field :password,
+              required: true,
+              autocomplete: "current-password",
+              class: "form-control login__input" %>
+        </div>
+
+        <div class="login__group login__group--inline">
+          <%= form.check_box :remember_me, class: "login__checkbox" %>
+          <%= form.label :remember_me,
+              "Remember me",
+              class: "login__checkbox-label" %>
+        </div>
+
+        <div class="login__actions">
+          <%= form.submit "Log in",
+              class: "btn btn-sm btn-primary login__submit" %>
+        </div>
+
+      <% end %>
+
+      <div class="login__links">
+        <%= link_to "Sign up",
+            new_user_path,
+            class: "login__link" %>
+      </div>
+
+      <div class="login__links">
+        <%= link_to "Forgot password?",
+            new_password_path,
+            class: "login__link" %>
+      </div>
 
     </div>
   </div>

@@ -1,111 +1,135 @@
-<div class="container px-5 px-sm-0">
-	<div class="row">
+<div class="container px-5 px-sm-0 user-show">
+  <div class="row user-show__row">
 
-  <div class="col-md-2">
-    <%= render "users/user_info", user: @user %>
-    <%= render "books/form", book: @book %>
-  </div>
+    <!-- サイドバー -->
+    <div class="col-md-2 user-show__sidebar">
+      <div class="user-show__user-info">
+        <%= render "users/user_info", user: @user %>
+      </div>
 
-<div class="col-md-10">
-<h2>Books</h2>
+      <div class="user-show__form">
+        <%= render "books/form", book: @book %>
+      </div>
+    </div>
 
-<table class="table table-hover table-inverse">
-  <thead>
-  <tr>
-    <th></th>
-    <th>Title</th>
-	  <th>Opinion</th>
-    <th></th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+    <!-- メイン -->
+    <div class="col-md-10 user-show__main">
 
-  <tbody>
-  <% @books.each do |book| %>
-  <tr>
-  <td>
-  <%= link_to user_path(book.user) do %>
-  <% if @user.profile_image.attached? %>
-    <%= image_tag @user.profile_image, size: "100x100" %>
-  <% else %>
-    <%= image_tag 'noimage.jpg', size: "100x100" %>
-  <% end %>
-  <% end %>
-  </td>
+      <!-- 投稿一覧 -->
+      <h2 class="user-show__title">Books</h2>
 
-  <td><%= link_to book.title, book_path(book) %></td>
+      <table class="table table-hover table-inverse user-show__table">
+        <thead class="user-show__thead">
+          <tr class="user-show__header-row">
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th></th>
+          </tr>
+        </thead>
 
-  <td><%= book.body %></td>
-  <td><div class="raty-readonly" data-score="<%= book.rating %>"></div></td>
-  </tr>
-  <% end %>
-  </tbody>
+        <tbody class="user-show__tbody">
+          <% @books.each do |book| %>
+            <tr class="user-show__row-item">
 
-</table>
+              <td class="user-show__user">
+                <%= link_to user_path(book.user), class: "user-show__user-link" do %>
+                  <% if @user.profile_image.attached? %>
+                    <%= image_tag @user.profile_image,
+                        size: "100x100",
+                        class: "user-show__user-image" %>
+                  <% else %>
+                    <%= image_tag "noimage.jpg",
+                        size: "100x100",
+                        class: "user-show__user-image" %>
+                  <% end %>
+                <% end %>
+              </td>
 
-  <div>
-    <h2>投稿数の前日比・前週比</h2>
-  </div>
+              <td class="user-show__book-title">
+                <%= link_to book.title,
+                    book_path(book),
+                    class: "user-show__book-title-link" %>
+              </td>
 
-<table class="table table-bordered text-center">
+              <td class="user-show__book-body">
+                <%= book.body %>
+              </td>
 
-  <thead class="table-light">
-  <tr>
-    <th>今日の投稿数</th>
-    <th>昨日の投稿数</th>
-    <th>前日比</th>
-  </tr>
-  </thead>
+              <td class="user-show__rating">
+                <div class="raty-readonly user-show__rating-star"
+                     data-score="<%= book.rating %>"></div>
+              </td>
 
-  <tbody>
-  <tr>
-    <td><%= @today_count %></td>
-    <td><%= @yesterday_count %></td>
-    <td><%= @day_ratio.present? ? "#{@day_ratio}" : "-" %>%</td>
-  </tr>
-  </tbody>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-</table>
+      <!-- 統計 -->
+      <div class="user-show__stats">
 
+        <h2 class="user-show__stats-title">投稿数の前日比・前週比</h2>
 
-<table class="table table-bordered text-center">
+        <!-- 日別 -->
+        <table class="table table-bordered text-center user-show__stats-table">
+          <thead class="table-light">
+            <tr>
+              <th>今日の投稿数</th>
+              <th>昨日の投稿数</th>
+              <th>前日比</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @today_count %></td>
+              <td><%= @yesterday_count %></td>
+              <td><%= @day_ratio.present? ? "#{@day_ratio}%" : "-" %></td>
+            </tr>
+          </tbody>
+        </table>
 
+        <!-- 週別 -->
+        <table class="table table-bordered text-center user-show__stats-table">
+          <thead class="table-light">
+            <tr>
+              <th>今週の投稿数</th>
+              <th>先週の投稿数</th>
+              <th>前週比</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @this_week_count %></td>
+              <td><%= @last_week_count %></td>
+              <td><%= @week_ratio.present? ? "#{@week_ratio}%" : "-" %></td>
+            </tr>
+          </tbody>
+        </table>
 
-  <thead class="table-light">
-  <tr>
-    <th>今週の投稿数</th>
-    <th>先週の投稿数</th>
-    <th>前週比</th>
-  </tr>
-  </thead>
+      </div>
 
-  <tbody>
-  <tr>
-    <td><%= @this_week_count %></td>
-    <td><%= @last_week_count %></td>
-    <td><%= @week_ratio.present? ? "#{@week_ratio}%" : "—" %>%</td>
-  </tr>
-  </tbody>
-</table>
+      <!-- 7日間 -->
+      <div class="user-show__weekly">
 
-<h2>7日間分の投稿数</h2>
+        <h2 class="user-show__weekly-title">7日間分の投稿数</h2>
 
-<table class="table table-bordered text-center">
-  <thead>
-    <tr>
-      <% @past_7_days.each do |day| %>
-        <th><%= day.strftime("%m/%d") %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <% @posts_per_day.each do |count| %>
-        <td><%= count %></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
+        <table class="table table-bordered text-center user-show__weekly-table">
+          <thead>
+            <tr>
+              <% @past_7_days.each do |day| %>
+                <th><%= day.strftime("%m/%d") %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <% @posts_per_day.each do |count| %>
+                <td><%= count %></td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
 
 <canvas id="postsChart" data-turbo-cache="false"></canvas>
 <script>
@@ -143,15 +167,25 @@ document.addEventListener("turbo:load", function () {
 });
 </script>
 
-<%= form_with url: daily_posts_user_path(@user), method: :get, data: { turbo_frame: "daily_posts" } do |f| %>
-  <%= f.date_field :date, value: Date.current %>
-  <%= f.submit "検索", class: "btn btn-primary btn-sm" %>
-<% end %>
+      <!-- 日付検索 -->
+      <div class="user-show__search">
+        <%= form_with url: daily_posts_user_path(@user),
+            method: :get,
+            data: { turbo_frame: "daily_posts" },
+            class: "user-show__search-form" do |f| %>
 
-<turbo-frame id="daily_posts"></turbo-frame>
+          <%= f.date_field :date,
+              value: Date.current,
+              class: "form-control user-show__date" %>
 
+          <%= f.submit "検索",
+              class: "btn btn-primary btn-sm user-show__search-btn" %>
 
-</div>
+        <% end %>
 
-</div>
+        <turbo-frame id="daily_posts" class="user-show__search-result"></turbo-frame>
+      </div>
+
+    </div>
+  </div>
 </div>

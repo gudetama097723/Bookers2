@@ -1,14 +1,28 @@
 
 
-<h2 class="mt-3">New book</h2>
-  <%= form_with model: book do |f|%>
+<h2 class="mt-3" book-form__title>New book</h2>
+  <%= form_with model: book, class: "book-form" do |f|%>
 
-  <p>Title</p>
+  <div class="book-form__group">
+    <label class="book-form__label">Title</label>
     <%= f.text_field :title, class: "form-control mb-2" %>
-  <p>Opinion</p>
-    <%= f.text_area :body, class: "form-control mb-2" %><br>
-    <div id="post_raty"></div>
-    <%= f.text_field :tag_names, placeholder: "タグをカンマ区切りで入力", class: "form-control mb-2" %><br>
-    <%= f.submit "Create Book", class: "btn btn-sm btn-success" %>
+  </div>
+
+  <div class="book-form__group">
+    <label class="book-form__label">Opinion</label>
+    <%= f.text_area :body, class: "form-control mb-2 book-form__textarea" %>
+  </div>
+  <div class="book-form__group">
+    <div id="post_raty" class="book-form__rating"></div>
+  </div>
+
+  <div class="book-form__group">
+    <label class="book-form__label">Tags</label>
+    <%= f.text_field :tag_names, placeholder: "タグをカンマ区切りで入力", class: "form-control mb-2 book-form__input" %>
+  </div>
+
+  <div class="book-form__actions">
+    <%= f.submit "Create Book", class: "btn btn-sm btn-success book-form__submit" %>
+  </div>
 
   <% end %>

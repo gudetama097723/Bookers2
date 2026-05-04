@@ -1,51 +1,77 @@
+<div class="user-info">
 
-<h2>User info</h2>
-<table>
-  <tr>
-  <% if user.profile_image.attached? %>
-    <%= image_tag user.profile_image, size: "100x100" %>
-  <% else %>
-    <%= image_tag 'noimage.jpg', size: "100x100" %>
-  <% end %>
-  </tr>
-  <tr>
-    <th>name</th>
-    <th><%= user.name %></th>
-  </tr>
-  <tr>
-    <th>introduction</th>
-    <th><%= user.introduction %></th>
-  </tr>
-  <tr>
-  <th>follows</th>
-  <th><%= link_to user.followings.count, followings_user_path(user) %></th>
-  </tr>
-  <tr>
-  <th>followers</th>
-  <th><%= link_to user.followers.count, followers_user_path(user) %></th>
-  </tr>
-</table>
+  <h2 class="user-info__title">User info</h2>
+
+  <div class="user-info__profile">
+    <% if user.profile_image.attached? %>
+      <%= image_tag user.profile_image,
+          size: "100x100",
+          class: "user-info__image" %>
+    <% else %>
+      <%= image_tag "noimage.jpg",
+          size: "100x100",
+          class: "user-info__image" %>
+    <% end %>
+  </div>
+
+  <table class="user-info__table">
+    <tr class="user-info__row">
+      <th class="user-info__label">name</th>
+      <td class="user-info__value"><%= user.name %></td>
+    </tr>
+
+    <tr class="user-info__row">
+      <th class="user-info__label">introduction</th>
+      <td class="user-info__value"><%= user.introduction %></td>
+    </tr>
+
+    <tr class="user-info__row">
+      <th class="user-info__label">follows</th>
+      <td class="user-info__value">
+        <%= link_to user.followings.count,
+            followings_user_path(user),
+            class: "user-info__link" %>
+      </td>
+    </tr>
+
+    <tr class="user-info__row">
+      <th class="user-info__label">followers</th>
+      <td class="user-info__value">
+        <%= link_to user.followers.count,
+            followers_user_path(user),
+            class: "user-info__link" %>
+      </td>
+    </tr>
+  </table>
+
+  <div class="user-info__actions">
+
     <% if Current.user != user %>
       <% if Current.user.following?(user) %>
         <%= link_to "フォロー解除",
-        user_relationships_path(user),
-        data: { turbo_method: :delete },
-        class: "btn btn-danger" %>
+            user_relationships_path(user),
+            data: { turbo_method: :delete },
+            class: "btn btn-danger user-info__btn user-info__btn--unfollow" %>
       <% else %>
         <%= link_to "フォロー",
-          user_relationships_path(user),
-          data: { turbo_method: :post },
-          class: "btn btn-primary"%>
+            user_relationships_path(user),
+            data: { turbo_method: :post },
+            class: "btn btn-primary user-info__btn user-info__btn--follow" %>
       <% end %>
     <% end %>
 
-    <% if Current.user != user && Current.user.following?(user) && user.following?(Current.user)%>
-      <%= button_to "チャットを始める", rooms_path(user_id: user.id), method: :post, class: "btn btn-success" %>
+    <% if Current.user != user && Current.user.following?(user) && user.following?(Current.user) %>
+      <%= button_to "チャットを始める",
+          rooms_path(user_id: user.id),
+          method: :post,
+          class: "btn btn-success user-info__btn user-info__btn--chat" %>
     <% end %>
 
-  <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-sm w-100" do %>
-  <i class="fa-solid fa-user-gear"></i>
+    <%= link_to edit_user_path(user),
+        class: "btn btn-outline-secondary btn-sm w-100 user-info__edit-btn" do %>
+      <i class="fa-solid fa-user-gear user-info__icon"></i>
+    <% end %>
 
-<% end %>
+  </div>
 
-
+</div>

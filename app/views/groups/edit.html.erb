@@ -1,17 +1,34 @@
-<div class="d-flex justify-content-center align-items-center">
-  <div class="text-center">
+<div class="d-flex justify-content-center align-items-center group-edit">
+  <div class="text-center group-edit__inner">
 
-<h1>Editing Group</h1>
+    <h1 class="group-edit__title">Editing Group</h1>
 
-<%= form_with model: @group do |f| %>
-  <div>グループ名</div>
-  <%= f.text_field :name %>
-  <div>紹介文</div>
-  <%= f.text_area :introduction %>
-  <div>グループ画像</div>
-  <%= f.file_field :image %><br>
-  <%= f.submit "作成" %>
-<% end %>
+    <%= form_with model: @group, class: "group-edit__form" do |f| %>
+
+      <div class="group-edit__group">
+        <label class="group-edit__label">グループ名</label>
+        <%= f.text_field :name,
+            class: "form-control group-edit__input" %>
+      </div>
+
+      <div class="group-edit__group">
+        <label class="group-edit__label">紹介文</label>
+        <%= f.text_area :introduction,
+            class: "form-control group-edit__textarea" %>
+      </div>
+
+      <div class="group-edit__group">
+        <label class="group-edit__label">グループ画像</label>
+        <%= f.file_field :image,
+            class: "form-control group-edit__file" %>
+      </div>
+
+      <div class="group-edit__actions">
+        <%= f.submit "更新",
+            class: "btn btn-success group-edit__submit" %>
+      </div>
+
+    <% end %>
 
   </div>
 </div>

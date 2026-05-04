@@ -4,153 +4,199 @@
     <meta name="turbo-cache-control" content="no-cache">
     <title><%= content_for(:title) || "Bookers2" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <script src="https://kit.fontawesome.com/3aa8ad2fa9.js" crossorigin="anonymous"></script>
     <%= javascript_importmap_tags %>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
 
+  <body class="app">
 
-    </head>
+    <!-- ===== Header ===== -->
+    <header class="app-header shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark app-header__nav">
+        <div class="container app-header__container">
 
-  <body>
-  <header class="shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
+          <!-- ロゴ -->
+          <a class="navbar-brand app-header__brand" href="/">
+            <span class="app-header__brand-text">Bookers</span>
+          </a>
 
-    <a class="navbar-brand" href="/"><span>Bookers</span></a>
+          <!-- ハンバーガー -->
+          <button class="navbar-toggler app-header__toggler" type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarNavDropdown">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+          <!-- メニュー -->
+          <div class="collapse navbar-collapse app-header__menu" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto app-header__list">
 
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ms-auto">
+              <% if authenticated? %>
 
-    <% if authenticated? %>
-      <li>
-        <%= link_to user_path(Current.user), class:"nav-link text-light" do %>
-          <i class="fa-solid fa-house"></i> Home
-	      <% end %>
-      </li>
-      <li>
-        <%= link_to users_path, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-users"></i> Users
-        <% end %>
-      </li>
-      <li>
-        <%= link_to books_path, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-book-open"></i> Books
-        <% end %>
-      </li>
-      <li>
-        <%= link_to session_path, data: { turbo_method: :delete }, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-right-from-bracket"></i> Log out
-        <% end %>
-      </li>
+                <li class="app-header__item">
+                  <%= link_to user_path(Current.user),
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-house app-header__icon"></i> Home
+                  <% end %>
+                </li>
 
-    <% else %>
-      <li>
-        <%= link_to root_path, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-house"></i> Home
-	      <% end %>
-      </li>
-      <li>
-        <%= link_to about_path, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-link"></i> About
-	      <% end %>
-      </li>
-      <li>
-        <%= link_to new_user_path, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-user-plus"></i> Sign up
-	      <% end %>
-      </li>
-      <li>
-        <%= link_to new_session_path, class:"nav-link text-light" do %>
-          <i class="fa-solid fa-right-to-bracket"></i> Log in
-        <% end %>
-      </li>
-    <% end %>
-    </ul>
-    </div>
-    </div>
-    </nav>
+                <li class="app-header__item">
+                  <%= link_to users_path,
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-users app-header__icon"></i> Users
+                  <% end %>
+                </li>
 
-    <% if authenticated? %>
-    
-      <div class="container mt-2">
-        <div class="d-flex justify-content-center">
-        <%= form_with url: search_path, method: :get,local: true do |f| %>
-          <%= f.text_field :keyword, placeholder: "検索ワード" %>
-          <%= f.select :model, options_for_select([["User","user"],["Book","book"]])%>
-          <%= f.select :method, options_for_select([["完全一致", "perfect"],["前方一致", "forward"],["後方一致", "backward"],["部分一致", "partial"]]) %>
-          <%= f.submit "検索" %>
-        <% end %>
+                <li class="app-header__item">
+                  <%= link_to books_path,
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-book-open app-header__icon"></i> Books
+                  <% end %>
+                </li>
 
-        <%= form_with url: search_path, method: :get, local: true do |f| %>
-          <%= f.text_field :tag, placeholder: "タグで検索" %>
-          <%= f.submit "検索" %>
-        <% end %>
+                <li class="app-header__item">
+                  <%= link_to session_path,
+                      data: { turbo_method: :delete },
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-right-from-bracket app-header__icon"></i> Log out
+                  <% end %>
+                </li>
+
+              <% else %>
+
+                <li class="app-header__item">
+                  <%= link_to root_path,
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-house app-header__icon"></i> Home
+                  <% end %>
+                </li>
+
+                <li class="app-header__item">
+                  <%= link_to about_path,
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-link app-header__icon"></i> About
+                  <% end %>
+                </li>
+
+                <li class="app-header__item">
+                  <%= link_to new_user_path,
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-user-plus app-header__icon"></i> Sign up
+                  <% end %>
+                </li>
+
+                <li class="app-header__item">
+                  <%= link_to new_session_path,
+                      class: "nav-link text-light app-header__link" do %>
+                    <i class="fa-solid fa-right-to-bracket app-header__icon"></i> Log in
+                  <% end %>
+                </li>
+
+              <% end %>
+            </ul>
+          </div>
         </div>
-      </div>
+      </nav>
 
+      <!-- ===== 検索エリア ===== -->
+      <% if authenticated? %>
+<div class="container mt-2 app-header__search">
+  <div class="d-flex justify-content-center align-items-center app-header__search-inner">
+
+    <!-- 通常検索 -->
+    <%= form_with url: search_path, method: :get, local: true,
+        class: "d-flex align-items-center gap-2 app-header__search-form" do |f| %>
+
+      <%= f.text_field :keyword,
+          placeholder: "検索ワード",
+          class: "form-control app-header__input" %>
+
+      <%= f.select :model,
+          options_for_select([["User","user"],["Book","book"]]),
+          class: "form-select app-header__select" %>
+
+      <%= f.select :method,
+          options_for_select([["完全一致", "perfect"],["前方一致", "forward"],["後方一致", "backward"],["部分一致", "partial"]]),
+          class: "form-select app-header__select" %>
+
+      <%= f.submit "検索",
+          class: "app-header__submit" %>
     <% end %>
-  </header>
-  
-  <div>
-  <%= flash[:notice] %>
-  </div>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="text-star">
+    <!-- スペース -->
+    <div class="app-header__search-gap mx-3"></div>
 
-  <% if @error_messages.present? %>
-    <div class="error-box">
-      <h2><%= @error_messages.count %> errors prohibited this from being saved:</h2 >
-      <ul>
-        <% @error_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <!-- タグ検索 -->
+    <%= form_with url: search_path, method: :get, local: true,
+        class: "d-flex align-items-center gap-2 app-header__tag-form" do |f| %>
 
-    </div>
+      <%= f.text_field :tag,
+          placeholder: "タグで検索",
+          class: "form-control app-header__input" %>
+
+      <%= f.submit "検索",
+          class: "app-header__submit" %>
+    <% end %>
+
   </div>
 </div>
+      <% end %>
+    </header>
 
-    <%= yield %>
+    <!-- ===== フラッシュ ===== -->
+    <div class="app-flash">
+      <%= flash[:notice] %>
+    </div>
 
-  <footer>
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col text-center">
-        <p>CopyRight Infratop.inc</p>
+    <!-- ===== エラー ===== -->
+    <div class="container app-error">
+      <div class="row justify-content-center">
+        <div class="app-error__inner">
+
+          <% if @error_messages.present? %>
+            <div class="app-error__box">
+              <h2 class="app-error__title">
+                <%= @error_messages.count %> errors prohibited this from being saved:
+              </h2>
+              <ul class="app-error__list">
+                <% @error_messages.each do |message| %>
+                  <li class="app-error__item"><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+        </div>
       </div>
     </div>
-  </div>
-  </footer>
 
+    <!-- ===== メイン ===== -->
+    <main class="app-main">
+      <%= yield %>
+    </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <!-- ===== フッター ===== -->
+    <footer class="app-footer">
+      <div class="container mt-5 app-footer__container">
+        <div class="row">
+          <div class="col text-center app-footer__inner">
+            <p class="app-footer__text">CopyRight Infratop.inc</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   </body>
 </html>

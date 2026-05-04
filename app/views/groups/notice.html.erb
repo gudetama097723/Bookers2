@@ -1,20 +1,33 @@
-<div class="d-flex justify-content-center align-items-center">
-  <div class="text-center">
+<div class="d-flex justify-content-center align-items-center group-mail">
+  <div class="text-center group-mail__inner">
 
-<h2>Event Mail</h2>
+    <h2 class="group-mail__title">Event Mail</h2>
 
-<%= form_with url: send_notice_group_path(@group), method: :post, data: { turbo: false } do %>
-  <div>
-    <%= label_tag :title, "Title" %><br>
-    <%= text_field_tag :title %>
-  </div>
+    <%= form_with url: send_notice_group_path(@group),
+        method: :post,
+        data: { turbo: false },
+        class: "group-mail__form" do %>
 
-  <div>
-    <%= label_tag :body, "Content" %><br>
-    <%= text_area_tag :body %>
-  </div>
+      <div class="group-mail__group">
+        <%= label_tag :title, "Title", class: "group-mail__label" %>
+        <%= text_field_tag :title,
+            nil,
+            class: "form-control group-mail__input" %>
+      </div>
 
-  <%= submit_tag "送信" %>
-<% end %>
+      <div class="group-mail__group">
+        <%= label_tag :body, "Content", class: "group-mail__label" %>
+        <%= text_area_tag :body,
+            nil,
+            class: "form-control group-mail__textarea" %>
+      </div>
+
+      <div class="group-mail__actions">
+        <%= submit_tag "送信",
+            class: "btn btn-primary group-mail__submit" %>
+      </div>
+
+    <% end %>
+
   </div>
 </div>
